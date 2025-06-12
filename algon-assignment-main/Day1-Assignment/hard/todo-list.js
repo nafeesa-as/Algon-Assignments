@@ -14,37 +14,47 @@ class Todo {
     this.todos = [];
   }
 
-  add(todo) {
-    this.todos.push(todo);
-  }
-
-  remove(index) {
-    if (index < 0 || index >= this.todos.length) {
-      throw new Error("Invalid index");
+  add(task) {
+    if (typeof task !== 'string' || task.trim() === '') {
+      throw new Error('Task must be a non-empty string');
     }
-    this.todos.splice(index, 1);
-  }
-
-  update(index, updatedTodo) {
-    if (index < 0 || index >= this.todos.length) {
-      throw new Error("Invalid index");
-    }
-    this.todos[index] = updatedTodo;
+    this.todos.push(task);
   }
 
   getAll() {
     return this.todos;
   }
 
-  get(index) {
-    if (index < 0 || index >= this.todos.length) {
-      throw new Error("Invalid index");
+  remove(index) {
+    if (this._isValidIndex(index)) {
+      this.todos.splice(index, 1);
     }
-    return this.todos[index];
+    // else: ignore silently (as your test expects)
+  }
+
+  update(index, newTask) {
+    if (this._isValidIndex(index)) {
+      if (typeof newTask !== 'string' || newTask.trim() === '') {
+        throw new Error('Task must be a non-empty string');
+      }
+      this.todos[index] = newTask;
+    }
+    // else: ignore silently
+  }
+
+  get(index) {
+    if (this._isValidIndex(index)) {
+      return this.todos[index];
+    }
+    return null; // as per your test expectation
   }
 
   clear() {
     this.todos = [];
+  }
+
+  _isValidIndex(index) {
+    return typeof index === 'number' && index >= 0 && index < this.todos.length;
   }
 }
 
