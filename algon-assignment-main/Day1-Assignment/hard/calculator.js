@@ -51,14 +51,18 @@ class Calculator {
 
   calculate(expression) {
     try {
-      
       const sanitizedExpression = expression.replace(/\s+/g, '');
+
       if (!/^[\d+\-*/().]+$/.test(sanitizedExpression)) {
         throw new Error('Invalid characters in expression');
       }
-      const evaluatedResult = new Function(`return ${sanitizedExpression}`)();
 
-      if (typeof evaluatedResult !== 'number' || isNaN(evaluatedResult)) {
+      const evaluatedResult = new Function(`return ${sanitizedExpression}`)();
+      if (
+        typeof evaluatedResult !== 'number' ||
+        isNaN(evaluatedResult) ||
+        !isFinite(evaluatedResult)
+      ) {
         throw new Error('Invalid expression');
       }
 
