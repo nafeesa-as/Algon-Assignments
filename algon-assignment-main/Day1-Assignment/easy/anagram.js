@@ -6,17 +6,16 @@
 
 
 function isAnagram(str1, str2) {
-  
-  if (!str1 || !str2) return false;
-  
-  const cleanStr1 = str1.toLowerCase().replace(/[^a-z]/g, '');
-  const cleanStr2 = str2.toLowerCase().replace(/[^a-z]/g, '');
-  
+  if (str1 == null || str2 == null) return false;
+
+  const cleanStr1 = str1.toLowerCase();
+  const cleanStr2 = str2.toLowerCase();
+
   if (cleanStr1.length !== cleanStr2.length) return false;
-  
+
   const sortedStr1 = cleanStr1.split('').sort().join('');
   const sortedStr2 = cleanStr2.split('').sort().join('');
-  
+
   return sortedStr1 === sortedStr2;
 }
 
